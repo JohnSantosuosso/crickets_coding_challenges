@@ -12,8 +12,12 @@ OptionParser.new do |opts|
     options[:lines] = true
   end
 
-  opts.on("-w", "--lines", "Count words in the specified file") do
+  opts.on("-w", "--words", "Count words in the specified file") do
     options[:words] = true
+  end
+
+  opts.on("-m", "--characters", "Count characters in the specified file") do
+    options[:characters] = true
   end
 end.parse!
   
@@ -29,11 +33,14 @@ else
       byte_count = File.size(file_name)
       puts "#{byte_count} #{file_name}"
     when options[:lines]
-      line_count = File.foreach(file_name).count
+      line_count = File.foreach(file_name).count #foreach goes line by line
       puts "#{line_count} #{file_name}"
     when options[:words]
       word_count = File.read(file_name).split(/\s+/).count
       puts "#{word_count} #{file_name}"
+    when options[:characters]
+      character_count = File.read(file_name).chars.count
+      puts "#{character_count} #{file_name}"
     else
       puts "Invalid option"
     end
